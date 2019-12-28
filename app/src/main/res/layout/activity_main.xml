@@ -8,54 +8,18 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:text="@string/app_title"
-        app:layout_anchorGravity="center"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </com.google.android.material.tabs.TabLayout>
-    <FrameLayout
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tabs"
-        android:id="@+id/contents">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#4CAF50"
-            android:gravity="center"
-            android:visibility="visible"
-            android:id="@+id/text1"
-            android:text="TEXT 1" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FF9800"
-            android:gravity="center"
-            android:visibility="invisible"
-            android:id="@+id/text2"
-            android:text="TEXT 2" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#009688"
-            android:gravity="center"
-            android:visibility="invisible"
-            android:id="@+id/text3"
-            android:text="TEXT 3" />
-
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/button"
+        android:layout_alignParentLeft="true">
+    </androidx.viewpager.widget.ViewPager>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
