@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class ContactItem implements Serializable {
@@ -8,6 +10,8 @@ public class ContactItem implements Serializable {
     private int photo_id = 0;
     private int person_id = 0;
     private int id;
+    private Bitmap photo_bitmap;
+    private int call_photo_id = 0;
 
     public ContactItem(String phone_number, String name, int photo_id) {
         this.phone_number = phone_number;
@@ -30,20 +34,18 @@ public class ContactItem implements Serializable {
     public int getId() {
         return this.id;
     }
+    public Bitmap getPhoto_bitmap() { return this.photo_bitmap; }
+    public int getCall_photo_id() { return this.call_photo_id; }
 
     public void setPhone_number(String string) { this.phone_number = string; }
     public void setName(String string) {
         this.name = string;
     }
-    public void setPhoto_id(int id) {
-        this.photo_id = id;
-    }
-    public void setPerson_id(int id) {
-        this.person_id = id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setPhoto_id(int id) { this.photo_id = id; }
+    public void setPerson_id(int id) { this.person_id = id; }
+    public void setId(int id) { this.id = id; }
+    public void setPhoto_bitmap(Bitmap bitmap) { this.photo_bitmap = bitmap; }
+    public void setCall_photo_id(int id) { this.call_photo_id = id; }
 
     @Override
     public String toString() {

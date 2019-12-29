@@ -3,20 +3,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/img"
+    <androidx.cardview.widget.CardView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@mipmap/ic_launcher" />
+        app:cardCornerRadius="30dp"
+        app:cardPreventCornerOverlap="false">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/sameple_profile" />
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
         android:orientation="vertical">
 
         <TextView
@@ -40,14 +50,14 @@
         android:layout_height="match_parent"
         android:gravity="end">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/call_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/button_background"
+            android:background="?actionBarItemBackground"
             android:gravity="right"
-            android:padding="8dp"
+            android:padding="7dp"
             android:src="@drawable/call" />
     </LinearLayout>
 </LinearLayout>
