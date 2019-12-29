@@ -1,13 +1,6 @@
 package com.example.myapplication;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 
 public class ContactItem implements Serializable {
     private String phone_number;
@@ -48,7 +41,7 @@ public class ContactItem implements Serializable {
     public void setPerson_id(int id) {
         this.person_id = id;
     }
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -1,39 +1,20 @@
 package com.example.myapplication;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
+import android.Manifest;
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-
 public class MainActivity extends AppCompatActivity {
-    public static Context mContext;
+//    public static Context mContext;
     ViewPager pager;
 
     @Override
@@ -41,10 +22,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkAddressVerify();
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-//        TabLayout.Tab tab1 = tabLayout.newTab().setText("Address book");
-//        TabLayout.Tab tab2 = tabLayout.newTab().setText("Gallery");
-//        TabLayout.Tab tab3 = tabLayout.newTab().setText("What?");
         TabLayout.Tab tab1 = tabLayout.newTab();
         TabLayout.Tab tab2 = tabLayout.newTab();
         TabLayout.Tab tab3 = tabLayout.newTab();
@@ -82,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         pager.setOffscreenPageLimit(3);
         pager.setAdapter(adapter);
 
-        mContext = this;
+//        mContext = this;
     }
 
     private void changeView(int index) {
@@ -120,68 +100,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void checkAddressVerify() {
 
-
-    public ArrayList<ContactItem> getContactList() {
-        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String[] projection = new String[]{
-                ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.Contacts.PHOTO_ID,
-                ContactsContract.Contacts._ID
-        };
-        String[] selectionArgs = null;
-        String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + "COLLATE LOCALIZED ASC";
-        Cursor cursor = getContentResolver().query(uri, projection, null, selectionArgs, sortOrder);
-        LinkedHashSet<ContactItem> hashlist = new LinkedHashSet<>();
-        if (cursor.moveToFirst()) {
-            do {
-                int photo_id = cursor.getInt(2);
-                int person_id = cursor.getInt(3);
-                ContactItem contactItem = new ContactItem("", "", 0);
-                contactItem.setPhone_number(cursor.getString(0));
-                contactItem.setName(cursor.getString(1));
-                contactItem.setPhoto_id(photo_id);
-                contactItem.setPerson_id(person_id);
-
-                hashlist.add(contactItem);
-            } while (cursor.moveToNext());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 1);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_CONTACTS}, 1);
         }
-        ArrayList<ContactItem> contactItems = new ArrayList<>(hashlist);
-        for (int i = 0; i < contactItems.size(); i++) {
-            contactItems.get(i).setId(i);
-        }
-
-        if (cursor != null) cursor.close();
-        return contactItems;
-    }
-}
-
-class MoviePagerAdapter extends FragmentStatePagerAdapter {
-    ArrayList<Fragment> items = new ArrayList<Fragment>();
-
-    public MoviePagerAdapter(@NonNull FragmentManager fm) {
-        super(fm);
-    }
-
-    public void addItem(Fragment item) {
-        items.add(item);
-    }
-
-    @NonNull
-    @Override
-    public Fragment getItem(int position) {
-        return items.get(position);
-    }
-
-    @Override
-    public int getCount() {
-        return items.size();
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return (position+1)+"th image";
     }
 }

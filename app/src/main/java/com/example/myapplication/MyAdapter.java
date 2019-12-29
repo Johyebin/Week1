@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,12 +46,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         private TextView tv_name;
         private TextView tv_phone;
         private ImageView img;
+        private ImageButton call_button;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tv_name = (TextView) itemView.findViewById(R.id.name);
             tv_phone = (TextView) itemView.findViewById(R.id.phone_number);
             img = (ImageView) itemView.findViewById(R.id.img);
+            call_button = (ImageButton) itemView.findViewById(R.id.call_button);
+
+            int position = getAdapterPosition();
         }
-     }
+    }
 }
