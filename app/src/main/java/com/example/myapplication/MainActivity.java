@@ -13,7 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-//    public static Context mContext;
+    //    public static Context mContext;
     ViewPager pager;
 
     @Override
@@ -23,21 +23,26 @@ public class MainActivity extends AppCompatActivity {
 
         checkAddressVerify();
 
+        // Initialize Tablayout and ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        TabLayout.Tab tab1 = tabLayout.newTab();
-        TabLayout.Tab tab2 = tabLayout.newTab();
-        TabLayout.Tab tab3 = tabLayout.newTab();
-        tab1.setIcon(R.drawable.address_book);
-        tab2.setIcon(R.drawable.gallery);
-        tab3.setIcon(R.drawable.question);
+        pager = (ViewPager) findViewById(R.id.pager);
 
+        // Initialize Adapter
         MoviePagerAdapter adapter = new MoviePagerAdapter(getSupportFragmentManager());
-        Address_book address_book = new Address_book();
-        adapter.addItem(address_book);
 
-        tabLayout.addTab(tab1);
-        tabLayout.addTab(tab2);
-        tabLayout.addTab(tab3);
+        Address_book address_book = new Address_book();
+        Gallery gallery = new Gallery();
+        Fragment3 something = new Fragment3();
+        adapter.addItem(address_book);
+        adapter.addItem(gallery);
+        adapter.addItem(something);
+
+        pager.setOffscreenPageLimit(3);
+        pager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(pager);
+        tabLayout.getTabAt(0).setIcon(R.drawable.address_book).setText("");
+        tabLayout.getTabAt(1).setIcon(R.drawable.gallery).setText("");
+        tabLayout.getTabAt(2).setIcon(R.drawable.question).setText("");
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -56,12 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 // do nothing
             }
         });
-
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setOffscreenPageLimit(3);
-        pager.setAdapter(adapter);
-
-//        mContext = this;
     }
 
     private void changeView(int index) {
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkAddressVerify() {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 1);
         }
@@ -116,5 +114,5 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
-     }
+    }
 }
